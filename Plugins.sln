@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32002.185
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nikse", "Nikse", "{65E5C891-9AB9-48E1-8DC5-A490BC4EF2FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SakuraTranslate", "SakuraTranslate\DLL\SakuraTranslate.csproj", "{535E50EE-A58D-4A35-86E7-74540A4548E4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{535E50EE-A58D-4A35-86E7-74540A4548E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{535E50EE-A58D-4A35-86E7-74540A4548E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{535E50EE-A58D-4A35-86E7-74540A4548E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{535E50EE-A58D-4A35-86E7-74540A4548E4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{535E50EE-A58D-4A35-86E7-74540A4548E4} = {65E5C891-9AB9-48E1-8DC5-A490BC4EF2FC}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8BBF401C-6D00-4F22-BFC0-DE2673213D5B}
+	EndGlobalSection
+EndGlobal
