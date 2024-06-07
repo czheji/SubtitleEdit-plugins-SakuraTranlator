@@ -6,7 +6,7 @@ name: .NET
 on:  
   push:
     tags:
-      - '*'
+      - 'v*'
 
 jobs:
   build:
@@ -18,8 +18,8 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 4.7.x
+        dotnet-version: 8.0.x
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build Plugins.sln --no-restore -c Release -f net472
