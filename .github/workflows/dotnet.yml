@@ -3,10 +3,10 @@
 
 name: .NET
 
-on:
-  label:
-    types:
-      - created
+on:  
+  push:
+    tags:
+      - '*'
 
 jobs:
   build:
