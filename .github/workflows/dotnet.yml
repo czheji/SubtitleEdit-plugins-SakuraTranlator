@@ -23,3 +23,9 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build Plugins.sln --no-restore -c Release -f net472
+    - name: Release
+      uses: softprops/action-gh-release@v2
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: |
+            SakuraTranslate/DLL/bin/Release/SakuraTranslate.dll
