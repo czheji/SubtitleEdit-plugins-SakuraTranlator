@@ -133,8 +133,8 @@ namespace SubtitleEdit
             string json;
             if (version=="0.10")
             {
-                json = $"{{\"prompt\":\"<|im_start|>system\\n你是一个轻小说翻译模型，可以流畅通顺地以日本轻小说的风格将日文翻译成简体中文，" +
-                   $"并联系上下文正确使用人称代词，不擅自添加原文中没有的代词。<|im_end|>\\n<|im_start|>user\\n据以下术语表（可以为空）：\\n" +
+                json = $"{{\"prompt\":\"<|im_start|>system\\n你是一个轻小说翻译模型，可以流畅通顺地使用给定的术语表以日本轻小说的风格将日文翻译成简体中文，并联系上下文正确使用人称代词，" +
+                   $"注意不要混淆使役态和被动态的主语和宾语，不要擅自添加原文中没有的代词，也不要擅自增加或减少换行。<|im_end|>\\n<|im_start|>user\\n据以下术语表（可以为空）：\\n" +
                    $"{DictString()}\\n\\n将下面的日文文本根据上述术语表的对应关系和备注翻译成中文：" +
                    $"{EscapeJsonString(line)}<|im_end|>\\n<|im_start|>assistant\\n\",\"n_predict\":1024,\"max_tokens\":2048,\"temperature\":0.1,\"top_p\":0.3,\"repeat_penalty\":1," +
                    $"\"frequency_penalty\":0.2,\"top_k\":40,\"seed\":-1}}";
