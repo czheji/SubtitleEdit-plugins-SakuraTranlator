@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms.VisualStyles;
 
 namespace SubtitleEdit
 {
@@ -14,7 +15,9 @@ namespace SubtitleEdit
     public class SakuraTranslator : ITranslator
     {
         public string Url {  get; set; }
-        public string AppToken { get; set; }
+        public string PromptVersion { get; set; }
+
+        public string[] GptDist {  get; set; }
 
         public string GetName()
         {
@@ -30,8 +33,8 @@ namespace SubtitleEdit
         {
             return new List<TranslationPair>
             {
-                new TranslationPair { Code = "zh-CN", Name = "Chinese(simplified)", IsoCode = "zh-CN" },
-                new TranslationPair { Code = "jp", Name = "Japanese", IsoCode = "jp" },
+                new TranslationPair { Code = "zh-CN", Name = "简体中文", IsoCode = "zh-CN" },
+                new TranslationPair { Code = "jp", Name = "日文", IsoCode = "jp" },
             };
         }
 
@@ -47,7 +50,7 @@ namespace SubtitleEdit
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
 
-            var request = new HttpRequestMessage(HttpMethod.Post, url) { Content = new JsonContent(MakeRequestJson(text)) };
+            var request = new HttpRequestMessage(HttpMethod.Post, url) { Content = new JsonContent(MakeRequestJson(text,PromptVersion)) };
             var res = client.SendAsync(request).Result;
             if (res.IsSuccessStatusCode)
             {
@@ -113,13 +116,37 @@ namespace SubtitleEdit
             }
         }
 
-        private string MakeRequestJson(string line)
+        private string DictString()
         {
+            StringBuilder sb = new StringBuilder();
+            foreach(string s in GptDist)
+            {
+                sb.Append(s);
+                sb.Append("\\n");
+            }
+            return sb.ToString();
+        }
+
+        private string MakeRequestJson(string line, string version)
+        {
+
             string json;
+            if (version=="0.10")
+            {
                 json = $"{{\"prompt\":\"<|im_start|>system\\n你是一个轻小说翻译模型，可以流畅通顺地以日本轻小说的风格将日文翻译成简体中文，" +
-                $"并联系上下文正确使用人称代词，不擅自添加原文中没有的代词。<|im_end|>\\n<|im_start|>user\\n将下面的日文文本翻译成中文：" +
-                $"{EscapeJsonString(line)}<|im_end|>\\n<|im_start|>assistant\\n\",\"n_predict\":1024,\"temperature\":0.1,\"top_p\":0.3,\"repeat_penalty\":1," +
-                $"\"frequency_penalty\":0.2,\"top_k\":40,\"seed\":-1}}";
+                   $"并联系上下文正确使用人称代词，不擅自添加原文中没有的代词。<|im_end|>\\n<|im_start|>user\\n据以下术语表（可以为空）：\\n" +
+                   $"{DictString()}\\n\\n将下面的日文文本根据上述术语表的对应关系和备注翻译成中文：" +
+                   $"{EscapeJsonString(line)}<|im_end|>\\n<|im_start|>assistant\\n\",\"n_predict\":1024,\"max_tokens\":2048,\"temperature\":0.1,\"top_p\":0.3,\"repeat_penalty\":1," +
+                   $"\"frequency_penalty\":0.2,\"top_k\":40,\"seed\":-1}}";
+
+            }
+            else
+            {
+                json = $"{{\"prompt\":\"<|im_start|>system\\n你是一个轻小说翻译模型，可以流畅通顺地以日本轻小说的风格将日文翻译成简体中文，" +
+                   $"并联系上下文正确使用人称代词，不擅自添加原文中没有的代词。<|im_end|>\\n<|im_start|>user\\n将下面的日文文本翻译成中文：" +
+                   $"{EscapeJsonString(line)}<|im_end|>\\n<|im_start|>assistant\\n\",\"n_predict\":1024,\"max_tokens\":2048,\"temperature\":0.1,\"top_p\":0.3,\"repeat_penalty\":1," +
+                   $"\"frequency_penalty\":0.2,\"top_k\":40,\"seed\":-1}}";
+            }
 
             return json;
         }

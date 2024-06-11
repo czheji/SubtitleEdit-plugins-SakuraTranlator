@@ -36,6 +36,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -47,6 +50,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DictAddForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DictAddForm.Designer.cs">
+      <DependentUpon>DictAddForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DictItem.cs" />
+    <Compile Include="GptDictForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GptDictForm.Designer.cs">
+      <DependentUpon>GptDictForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ITranslator.cs" />
     <Compile Include="Logic\Configuration.cs" />
     <Compile Include="IPlugin.cs" />
@@ -60,6 +76,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Logic\Paragraph.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="SakuraTranslator.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -71,6 +88,12 @@
     <Compile Include="TranslationPair.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="DictAddForm.resx">
+      <DependentUpon>DictAddForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GptDictForm.resx">
+      <DependentUpon>GptDictForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

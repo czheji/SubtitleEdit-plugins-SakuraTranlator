@@ -44,8 +44,9 @@
             this.comboBoxLanguageTo = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxUrl = new System.Windows.Forms.TextBox();
-            this.textBoxClientSecret = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.cbVersion = new System.Windows.Forms.ComboBox();
+            this.buttonDict = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listView1
@@ -90,7 +91,7 @@
             this.buttonOk.Name = "buttonOk";
             this.buttonOk.Size = new System.Drawing.Size(75, 21);
             this.buttonOk.TabIndex = 7;
-            this.buttonOk.Text = "OK";
+            this.buttonOk.Text = "确定";
             this.buttonOk.UseVisualStyleBackColor = true;
             this.buttonOk.Click += new System.EventHandler(this.buttonOk_Click);
             // 
@@ -102,17 +103,17 @@
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 21);
             this.buttonCancel.TabIndex = 8;
-            this.buttonCancel.Text = "Cancel";
+            this.buttonCancel.Text = "取消";
             this.buttonCancel.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 14);
+            this.label1.Location = new System.Drawing.Point(39, 14);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(161, 12);
+            this.label1.Size = new System.Drawing.Size(89, 12);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Translation language pair:";
+            this.label1.Text = "源和目标语言：";
             // 
             // linkLabelPoweredBy
             // 
@@ -141,7 +142,7 @@
             this.buttonTranslate.Name = "buttonTranslate";
             this.buttonTranslate.Size = new System.Drawing.Size(113, 21);
             this.buttonTranslate.TabIndex = 2;
-            this.buttonTranslate.Text = "Translate";
+            this.buttonTranslate.Text = "翻译";
             this.buttonTranslate.UseVisualStyleBackColor = true;
             this.buttonTranslate.Click += new System.EventHandler(this.buttonTranslate_Click);
             // 
@@ -163,7 +164,7 @@
             this.buttonCancelTranslate.Name = "buttonCancelTranslate";
             this.buttonCancelTranslate.Size = new System.Drawing.Size(99, 21);
             this.buttonCancelTranslate.TabIndex = 3;
-            this.buttonCancelTranslate.Text = "Cancel";
+            this.buttonCancelTranslate.Text = "取消";
             this.buttonCancelTranslate.UseVisualStyleBackColor = true;
             this.buttonCancelTranslate.Click += new System.EventHandler(this.buttonCancelTranslate_Click);
             // 
@@ -188,38 +189,51 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 50);
+            this.label2.Location = new System.Drawing.Point(9, 50);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(29, 12);
+            this.label2.Size = new System.Drawing.Size(41, 12);
             this.label2.TabIndex = 11;
-            this.label2.Text = "Url:";
+            this.label2.Text = "地址：";
             // 
             // textBoxUrl
             // 
             this.textBoxUrl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxUrl.Location = new System.Drawing.Point(48, 47);
+            this.textBoxUrl.Location = new System.Drawing.Point(56, 47);
             this.textBoxUrl.Name = "textBoxUrl";
             this.textBoxUrl.Size = new System.Drawing.Size(281, 21);
             this.textBoxUrl.TabIndex = 12;
             this.textBoxUrl.Text = "http://127.0.0.1:8080";
             // 
-            // textBoxClientSecret
-            // 
-            this.textBoxClientSecret.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxClientSecret.Location = new System.Drawing.Point(502, 47);
-            this.textBoxClientSecret.Name = "textBoxClientSecret";
-            this.textBoxClientSecret.Size = new System.Drawing.Size(317, 21);
-            this.textBoxClientSecret.TabIndex = 13;
-            // 
             // label3
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(422, 50);
+            this.label3.Location = new System.Drawing.Point(381, 50);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(59, 12);
+            this.label3.Size = new System.Drawing.Size(77, 12);
             this.label3.TabIndex = 14;
-            this.label3.Text = "AppToken:";
+            this.label3.Text = "提示词版本：";
+            // 
+            // cbVersion
+            // 
+            this.cbVersion.FormattingEnabled = true;
+            this.cbVersion.Items.AddRange(new object[] {
+            "0.9",
+            "0.10"});
+            this.cbVersion.Location = new System.Drawing.Point(464, 47);
+            this.cbVersion.Name = "cbVersion";
+            this.cbVersion.Size = new System.Drawing.Size(121, 20);
+            this.cbVersion.TabIndex = 15;
+            // 
+            // buttonDict
+            // 
+            this.buttonDict.Location = new System.Drawing.Point(607, 45);
+            this.buttonDict.Name = "buttonDict";
+            this.buttonDict.Size = new System.Drawing.Size(75, 23);
+            this.buttonDict.TabIndex = 16;
+            this.buttonDict.Text = "词典";
+            this.buttonDict.UseVisualStyleBackColor = true;
+            this.buttonDict.Click += new System.EventHandler(this.buttonDict_Click);
             // 
             // MainForm
             // 
@@ -228,8 +242,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(831, 514);
+            this.Controls.Add(this.buttonDict);
+            this.Controls.Add(this.cbVersion);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBoxClientSecret);
             this.Controls.Add(this.textBoxUrl);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.comboBoxLanguageTo);
@@ -249,7 +264,8 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "MainForm";
+            this.Text = "Sakura翻译";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -273,7 +289,8 @@
         private System.Windows.Forms.ComboBox comboBoxLanguageTo;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxUrl;
-        private System.Windows.Forms.TextBox textBoxClientSecret;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox cbVersion;
+        private System.Windows.Forms.Button buttonDict;
     }
 }

@@ -38,11 +38,13 @@ namespace SubtitleEdit
         private static string _to = "zh-CN";
         private const char ParagraphSplitter = '*';
         private bool _abort;
+        private GptDictForm _gptDictForm;
 
         public string FixedSubtitle { get; private set; }
 
         public MainForm()
         {
+            _gptDictForm= new GptDictForm();
             InitializeComponent();
             KeyDown += (s, e) =>
             {
@@ -54,6 +56,7 @@ namespace SubtitleEdit
             textBox1.Visible = false;
             listView1.Columns[2].Width = -2;
             buttonCancelTranslate.Enabled = false;
+            cbVersion.SelectedIndex = 1;
             RestoreSettings();
         }
 
@@ -321,7 +324,8 @@ namespace SubtitleEdit
         private void buttonTranslate_Click(object sender, EventArgs e)
         {
             _translator.Url = textBoxUrl.Text.Trim();
-            _translator.AppToken = textBoxClientSecret.Text.Trim();
+            _translator.PromptVersion = cbVersion.SelectedItem.ToString();
+            _translator.GptDist = _gptDictForm.GetDict();
 
             if (string.IsNullOrEmpty(_translator.Url))
             {
@@ -403,7 +407,7 @@ namespace SubtitleEdit
             path = Path.Combine(path, "Plugins");
             if (!Directory.Exists(path))
                 path = Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Subtitle Edit"), "Plugins");
-            return Path.Combine(path, "PapagoTranslator.xml");
+            return Path.Combine(path, "SakuraTranslator.xml");
         }
 
         private void RestoreSettings()
@@ -413,8 +417,8 @@ namespace SubtitleEdit
             {
                 var doc = new XmlDocument();
                 doc.Load(fileName);
-                textBoxUrl.Text = DecodeFrom64(doc.DocumentElement.SelectSingleNode("ClientId").InnerText);
-                textBoxClientSecret.Text = DecodeFrom64(doc.DocumentElement.SelectSingleNode("ClientSecret").InnerText);
+                textBoxUrl.Text = DecodeFrom64(doc.DocumentElement.SelectSingleNode("Url").InnerText);
+                cbVersion.SelectedItem = DecodeFrom64(doc.DocumentElement.SelectSingleNode("Version").InnerText);
                 _from = doc.DocumentElement.SelectSingleNode("Source").InnerText;
                 _to = doc.DocumentElement.SelectSingleNode("Target").InnerText;
             }
@@ -429,9 +433,9 @@ namespace SubtitleEdit
             try
             {
                 var doc = new XmlDocument();
-                doc.LoadXml("<PapagoTranslator><ClientId/><ClientSecret/></PapagoTranslator>");
-                doc.DocumentElement.SelectSingleNode("ClientId").InnerText = EncodeTo64(textBoxUrl.Text.Trim());
-                doc.DocumentElement.SelectSingleNode("ClientSecret").InnerText = EncodeTo64(textBoxClientSecret.Text.Trim());
+                doc.LoadXml("<SakuraTranslator><Url/><Version/><Source/><Target/></SakuraTranslator>");
+                doc.DocumentElement.SelectSingleNode("Url").InnerText = EncodeTo64(textBoxUrl.Text.Trim());
+                doc.DocumentElement.SelectSingleNode("Version").InnerText = EncodeTo64(cbVersion.SelectedItem.ToString());
                 doc.DocumentElement.SelectSingleNode("Source").InnerText = _from;
                 doc.DocumentElement.SelectSingleNode("Target").InnerText = _to;
                 doc.Save(fileName);
@@ -451,6 +455,16 @@ namespace SubtitleEdit
         {
             byte[] encodedDataAsBytes = Convert.FromBase64String(encodedData);
             return System.Text.Encoding.Unicode.GetString(encodedDataAsBytes);
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonDict_Click(object sender, EventArgs e)
+        {
+            _gptDictForm.ShowDialog();
         }
     }
 }
